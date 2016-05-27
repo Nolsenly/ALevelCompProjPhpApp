@@ -77,7 +77,7 @@
         <div class="col-md-4">
           <h2>Fantasy</h2>
           <p>Pit friend against friend in our fantasy simulator, determining who will be the number one soloq star, even pick those who aren't your friends, such as Famous players</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          <p><a class="btn btn-default" class="col-md-1" href="#" role="button">View details &raquo;</a></p>
         </div>
         <div class="col-md-4"> <!-- basically Need to find Filelr info for this area.-->
           <h2>Perp</h2>
