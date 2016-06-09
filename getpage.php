@@ -1,7 +1,7 @@
 <?php
 //header('Content-Type: application/json');
 $region = "euw";
-$playername = "edwardbo123";
+$playername = "totallycarbon";
 $idurl = "https://euw.api.pvp.net/api/lol/" . $region . "/v1.4/summoner/by-name/" . $playername . "?api_key=05047aed-e174-4bba-b294-c2c4ec3af4f0";
 $idopt = file_get_contents($idurl);
 //var_dump($idopt);
@@ -34,7 +34,18 @@ $Ws = 0;
 $Tcc = 0;
 $Dt = 0;
 $Dc = 0;
+$noofgms = 0;
 foreach ($histdec['games'] as $key => $value) {
+$epcd = $value['createDate'];
+  $epoch = substr($epcd, 0, 10);
+  $epdate = date('Y-m-d H:i:s', $epoch);
+  $currtimeep = time();
+#  echo $epoch . "  " . $currtimeep;
+$epweeklen = 604800 ;
+    $minweektimeep = $currtimeep -  $epweeklen ;
+    #echo $minweektimeep . " " . $epoch . " ";
+
+  if ( $epoch > ($minweektimeep)){
     try {
       $ck= $ck + $value['stats']['championsKilled'] . "\n";
     } catch (Exception $e) {
@@ -75,13 +86,20 @@ foreach ($histdec['games'] as $key => $value) {
     } catch (Exception $e) {
       $Dt= $Dt;
     }
+    $noofgms = $noofgms +1;
 }
-
+}
+#$epochisbad = "1463060053725";
+#$epoch = substr($epochisbad, 0, 10);
+#echo date('Y-m-d H:i:s', $epoch);
+#echo date(DATE_RFC2822  , strtotime($epochiscancer));
 echo $ck;
 echo $td;
 echo $As;
 echo $Ws;
-$PlayerPts = ($ck - $td + 0.5*$As + 0.1*($Ws) + 0.005*$Tcc + 0.001*$Dc + 0.0001*($Dt-$Dc));
-echo $PlayerPts;
+$PlayerPts = ($ck - $td + 0.5*$As + 0.1*($Ws) + 0.005*$Tcc + 0.001*$Dc + 0.0001*($Dt-$Dc))/10;
+$AVGPP = $PlayerPts / $noofgms;
+echo $noofgms;
+echo $AVGPP;
 #echo $KillNo;
 ?>
