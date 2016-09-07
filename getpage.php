@@ -16,7 +16,7 @@ foreach ($idopt as $key => $value) {
 }
 
 $playeridencod =json_encode($playerid);
-$PlayersId = substr($playeridencod, 1, strlen($histopt)-1);
+$PlayersId = substr($playeridencod, 1, (strlen($playeridencod)-2));
 #echo $playeridencod;
 $matchhisturl = "https://euw.api.pvp.net/api/lol/euw/v1.3/game/by-summoner/" . $PlayersId . "/recent?api_key=05047aed-e174-4bba-b294-c2c4ec3af4f0";
 $test = "c://stuff.txt";
@@ -44,47 +44,40 @@ $epcd = $value['createDate'];
 $epweeklen = 604800 ;
     $minweektimeep = $currtimeep -  $epweeklen ;
     #echo $minweektimeep . " " . $epoch . " ";
-
-  if ( $epoch > ($minweektimeep)){
-    try {
+    if ( $epoch > ($minweektimeep)){
+      if(!empty($value['stats']['championsKilled'])){
       $ck= $ck + $value['stats']['championsKilled'] . "\n";
-    } catch (Exception $e) {
-      $ck= $ck;
+    } else {
+
     }
-    try {
+    if (!empty($value['stats']['numDeaths'])){
       $td= $td + $value['stats']['numDeaths'] . "\n";
-    } catch (Exception $e) {
-      $td= $td;
+    } else{
     }
-    try {
+    if (!empty($value['stats']['assists'])){
       $As= $As + $value['stats']['assists'] . "\n";
-    } catch (Exception $e) {
-      $As= $As;
+    } else{
+
     }
-    try {
+    if (!empty($value['stats']['wardPlaced'])) {
       $Ws= $Ws + $value['stats']['wardPlaced'] . "\n";
-    } catch (Exception $e) {
-      $Ws= $Ws;
+    } else {
     }
-    try {
+    if (!empty($value['stats']['wardKilled'])) {
       $Ws= $Ws + $value['stats']['wardKilled'] . "\n";
-    } catch (Exception $e) {
-      $Ws= $Ws;
+    } else {
     }
-    try {
+    if (!empty($value['stats']['totalTimeCrowdControlDealt'])) {
       $Tcc= $Tcc + $value['stats']['totalTimeCrowdControlDealt'] . "\n";
-    } catch (Exception $e) {
-      $As= $As;
+    } else {
     }
-    try {
+    if (!empty($value['stats']['totalDamageDealtToChampions'])) {
       $Dc= $Dc + $value['stats']['totalDamageDealtToChampions'] . "\n";
-    } catch (Exception $e) {
-      $Dc= $Dc;
+    } else {
     }
-    try {
+    if (!empty($value['stats']['totalDamageDealt'])) {
       $Dt= $Dt + $value['stats']['totalDamageDealt'] . "\n";
-    } catch (Exception $e) {
-      $Dt= $Dt;
+    } else {
     }
     $noofgms = $noofgms +1;
 }
@@ -101,5 +94,7 @@ $PlayerPts = ($ck - $td + 0.5*$As + 0.1*($Ws) + 0.005*$Tcc + 0.001*$Dc + 0.0001*
 $AVGPP = $PlayerPts / $noofgms;
 echo $noofgms;
 echo $AVGPP;
+#add this data to database of player's team, being comprised of three players, stored as a name, favoured role and AVGPP
+#$AVGPP
 #echo $KillNo;
 ?>
