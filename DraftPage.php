@@ -78,9 +78,9 @@
         <div class="col-md-4">
           <h2>Picks:</h2>
           <p>Picks another Player</p>
-          <form class = "form-control" method = "post" action ="getpage.php">
-            <input type = "text" class ="form-control" id = "ppname">
-            <select class="form-control">
+          <form  method = "post" action ="getpage.php">
+            <input type = "text" class ="form-control" id = "ppname" name = "ppname">
+            <select class="form-control" id = "region" name = "region">
               <option>EUW</option>
               <option>NA</option>
               <option>KR</option>
@@ -92,8 +92,7 @@
               <option>LAS</option>
               <option>OCE</option>
               <option>RU</option>
-            </select>
-              <p><a class="btn btn-default" href="getpage.php" role="button">View details &raquo;</a></p>
+            </select><button type="submit" class="btn btn-success"> ADD</button>
           </form>
           <!-- Will give player names and points.-->
 

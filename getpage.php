@@ -1,7 +1,7 @@
 <?php
 //header('Content-Type: application/json');
-$region = "euw";
-$playername = "totallycarbon";
+$region =   htmlspecialchars($_POST["region"]);
+$playername = htmlspecialchars($_POST["ppname"]);
 $idurl = "https://euw.api.pvp.net/api/lol/" . $region . "/v1.4/summoner/by-name/" . $playername . "?api_key=05047aed-e174-4bba-b294-c2c4ec3af4f0";
 $idopt = file_get_contents($idurl);
 //var_dump($idopt);
@@ -86,15 +86,36 @@ $epweeklen = 604800 ;
 #$epoch = substr($epochisbad, 0, 10);
 #echo date('Y-m-d H:i:s', $epoch);
 #echo date(DATE_RFC2822  , strtotime($epochiscancer));
-echo $ck;
-echo $td;
-echo $As;
-echo $Ws;
+#echo $ck;
+#echo $td;
+#echo $As;
+#echo $Ws;
 $PlayerPts = ($ck - $td + 0.5*$As + 0.1*($Ws) + 0.005*$Tcc + 0.001*$Dc + 0.0001*($Dt-$Dc))/10;
 $AVGPP = $PlayerPts / $noofgms;
-echo $noofgms;
-echo $AVGPP;
+#echo $noofgms;
+#echo $AVGPP;
 #add this data to database of player's team, being comprised of three players, stored as a name, favoured role and AVGPP
 #$AVGPP
 #echo $KillNo;
+$servername = "localhost";
+$username = "root";
+$password = "";
+#eWXDPAvqTAmf3JUj
+
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=alp_db", $username, $password);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully";
+    $stmt = $conn->prepare("UPDATE 'td' SET ':mid'=':MID', ':mnm' = ':MNM', ':mpts'=':MPTS', WHERE 'TID' = :ID");
+    $stmt->bindValue(':mid', $mid, ':MID', $MID, ':mnm',$mnm,'MNM',$MNM,':mpts',$mpts,':MPTS',$MPTS, ':ID', $uid, PDO::PARAM_STR);
+    $stmt->execute();
+    $affected_rows = $stmt->rowCount();
+    #$conn->query("UPDATE `td` SET `TID`=[$MTeamId],`TNAME`=[value-2],`M" .$CorM. "ID`=[value-3],`M" .$CorM. NAME`=[value-4] WHERE 1"
+    }
+catch(PDOException $e)
+    {
+    echo "Connection failed: " . $e->getMessage();
+    }
+$PlayersId
 ?>
