@@ -1,4 +1,5 @@
 <?php
+#at some point work out a way to redirect to last page. probs to do with trakcing last page in a session, assigning may ba a prob tho.
 session_start();
 $u_name = htmlspecialchars($_POST['username']);
 $pword = md5(htmlspecialchars($_POST['password']));
@@ -11,7 +12,7 @@ $passwords = array_map('md5', $pass);
 foreach ($user as $key => $value) {
   if($value == $u_name){
     if($passwords[$key] === $pword){
-      $_SESSION['LIID'] = $pass[$key];
+      $_SESSION['LIID'] = $uID[$key];
       $_SESSION['LIUN'] = $user[$key];
       $_SESSION['LIN?'] = 1;
 
@@ -20,6 +21,9 @@ foreach ($user as $key => $value) {
     }
   } else {
     #some code
+    $SESSION['LIF'] = 1;
   }
+  header("location: LandingPage.php");
+  exit();
 }
 ?>

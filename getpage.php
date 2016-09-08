@@ -92,6 +92,7 @@ $epweeklen = 604800 ;
 #echo $Ws;
 $PlayerPts = ($ck - $td + 0.5*$As + 0.1*($Ws) + 0.005*$Tcc + 0.001*$Dc + 0.0001*($Dt-$Dc))/10;
 $AVGPP = $PlayerPts / $noofgms;
+
 #echo $noofgms;
 #echo $AVGPP;
 #add this data to database of player's team, being comprised of three players, stored as a name, favoured role and AVGPP
@@ -107,8 +108,16 @@ try {
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     echo "Connected successfully";
+    // $dr = $conn->prepare("SELECT * FROM ud WHERE UNAME = :datUN;");
+    // $dr->bindValue(':datUN', $_SESSION['LIUN'], PDO::PARAM_STR);
+    // $dr->execute();
+#    $uid =  $dr['UID'];
+    $uid = $_SESSION['LIID'];
+    $mid = ("M".$uid."ID");
+    $mnm = ("M".$uid."NAME");
+    $mpts = ("M".$uid."PTS");
     $stmt = $conn->prepare("UPDATE 'td' SET ':mid'=':MID', ':mnm' = ':MNM', ':mpts'=':MPTS', WHERE 'TID' = :ID");
-    $stmt->bindValue(':mid', $mid, ':MID', $MID, ':mnm',$mnm,'MNM',$MNM,':mpts',$mpts,':MPTS',$MPTS, ':ID', $uid, PDO::PARAM_STR);
+    $stmt->bindValue(':mid', $mid, ':MID', $PlayersId, ':mnm',$mnm,'MNM',$playername,':mpts',$mpts,':MPTS',$AVGPP, ':ID',   $uid, PDO::PARAM_STR);
     $stmt->execute();
     $affected_rows = $stmt->rowCount();
     #$conn->query("UPDATE `td` SET `TID`=[$MTeamId],`TNAME`=[value-2],`M" .$CorM. "ID`=[value-3],`M" .$CorM. NAME`=[value-4] WHERE 1"
