@@ -47,6 +47,10 @@
           <a class="navbar-brand" href="#">LFFL</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+          <?php
+          if ($_SESSION['LIN?'] == 0){
+            echo('
+
           <form class="navbar-form navbar-right" method="post" action="page2.php">
             <!--So, do the bit above with that method and action in order to quote the login -->
             <div class="form-group">
@@ -57,7 +61,8 @@
               <input type="password" placeholder="Password" name="password" class="form-control" id = "pwordinp">
             </div>
             <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
+          </form>');
+        }?>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
@@ -67,7 +72,7 @@
       <div class="container">
         <h1>LFFL</h1>
         <p>Welcome To LFFL, LFFL an app to play a fantasy league of league of legends with your friends as the players! I hope you enjoy it and I wish you much luck in the jungle of soloq.</p>
-        <p><a class="btn btn-primary btn-lg" href="http://localhost/myApp/DraftPage.php#" role="button">Learn more &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="http://localhost/ALevelCompProjPhpApp/DraftPage.php#" role="button">Learn more &raquo;</a></p>
       </div>
     </div>
 

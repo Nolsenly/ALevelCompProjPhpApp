@@ -34,7 +34,8 @@
   </head>
 
   <body>
-
+    <?php
+session_start();?>
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -70,9 +71,11 @@
         <p><a class="btn btn-primary btn-lg" href="http://localhost/myApp/HelpPage.php#" role="button">Need Help? &raquo;</a></p>
         <!--Here we need to get some Help and explanation of how to use the site on another webpage6-->
       </div>
-    </div>
+    </div>  
+    <?php
+    if ($_SESSION['LIN?']==1){
 
-    <div class="container">
+echo('<div class="container">
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-4">
@@ -109,9 +112,11 @@
           <p>Players You can trade with go here ?o_o? </p>
           <div class ="form-group">
           <!-- will work as above in the free agents place -->
-          <p><a class="btn btn-default" href="#" role="button">View Player's Picks &raquo;</a></p>
+          <p><a class="btn btn-default" href="#" role="button">View Players Picks &raquo;</a></p>
         </div>
       </div>
+      ' );
+    }?>
 
       <hr>
 
