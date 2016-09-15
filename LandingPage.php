@@ -48,7 +48,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <?php
-          if ($_SESSION['LIN?'] == 0){
+          if ($_SESSION['LGIN'] == 0){
             echo('
 
           <form class="navbar-form navbar-right" method="post" action="page2.php">

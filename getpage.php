@@ -35,6 +35,7 @@ $Tcc = 0;
 $Dt = 0;
 $Dc = 0;
 $noofgms = 0;
+$noneplayed=false;
 foreach ($histdec['games'] as $key => $value) {
 $epcd = $value['createDate'];
   $epoch = substr($epcd, 0, 10);
@@ -90,8 +91,13 @@ $epweeklen = 604800 ;
 #echo $td;
 #echo $As;
 #echo $Ws;
+if ($noofgms > 0){
 $PlayerPts = ($ck - $td + 0.5*$As + 0.1*($Ws) + 0.005*$Tcc + 0.001*$Dc + 0.0001*($Dt-$Dc))/10;
 $AVGPP = $PlayerPts / $noofgms;
+}
+else {
+  $noneplayed=true;
+}
 
 #echo $noofgms;
 #echo $AVGPP;
@@ -101,8 +107,10 @@ $AVGPP = $PlayerPts / $noofgms;
 $servername = "localhost";
 $username = "root";
 $password = "";
-#eWXDPAvqTAmf3JUj
 
+#eWXDPAvqTAmf3JUj
+if ($noneplayed ==false){
+session_start();
 try {
     $conn = new PDO("mysql:host=$servername;dbname=alp_db", $username, $password);
     // set the PDO error mode to exception
@@ -117,7 +125,8 @@ try {
     $mnm = ("M".$uid."NAME");
     $mpts = ("M".$uid."PTS");
     $stmt = $conn->prepare("UPDATE 'td' SET ':mid'=':MID', ':mnm' = ':MNM', ':mpts'=':MPTS', WHERE 'TID' = :ID");
-    $stmt->bindValue(':mid', $mid, ':MID', $PlayersId, ':mnm',$mnm,'MNM',$playername,':mpts',$mpts,':MPTS',$AVGPP, ':ID',   $uid, PDO::PARAM_STR);
+    $stmt->bindParam(':mid', $mid, ':MID', $PlayersId, ':mnm',$mnm,'MNM',$playername,':mpts',$mpts,':MPTS',$AVGPP, ':ID', $uid);
+    #HERE NEED TO GIVE 1 VAR 1 BINDPARAM
     $stmt->execute();
     $affected_rows = $stmt->rowCount();
     #$conn->query("UPDATE `td` SET `TID`=[$MTeamId],`TNAME`=[value-2],`M" .$CorM. "ID`=[value-3],`M" .$CorM. NAME`=[value-4] WHERE 1"
@@ -126,5 +135,7 @@ catch(PDOException $e)
     {
     echo "Connection failed: " . $e->getMessage();
     }
-$PlayersId
+
+
+}
 ?>

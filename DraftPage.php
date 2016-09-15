@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <?php include_once("header.php");
+session_start();
+#var_dump($_SESSION);
+
 ?>
 <html lang="en">
   <head>
@@ -34,8 +37,6 @@
   </head>
 
   <body>
-    <?php
-session_start();?>
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -71,9 +72,11 @@ session_start();?>
         <p><a class="btn btn-primary btn-lg" href="http://localhost/myApp/HelpPage.php#" role="button">Need Help? &raquo;</a></p>
         <!--Here we need to get some Help and explanation of how to use the site on another webpage6-->
       </div>
-    </div>  
+    </div>
     <?php
-    if ($_SESSION['LIN?']==1){
+#    session_start();
+    #var_dump($_SESSION);
+    if ($_SESSION['LGIN']==1){
 
 echo('<div class="container">
       <!-- Example row of columns -->
@@ -84,16 +87,16 @@ echo('<div class="container">
           <form  method = "post" action ="getpage.php">
             <input type = "text" class ="form-control" id = "ppname" name = "ppname">
             <select class="form-control" id = "region" name = "region">
-              <option>EUW</option>
-              <option>NA</option>
-              <option>KR</option>
-              <option>TR</option>
-              <option>BR</option>
-              <option>EUNE</option>
-              <option>JP</option>
-              <option>LAN</option>
-              <option>LAS</option>
-              <option>OCE</option>
+              <option value = "euw">EUW</option>
+              <option value = "na">NA</option>
+              <option value = "kr">KR</option>
+              <option value = "tr">TR</option>
+              <option value = "br">BR</option>
+              <option value = "eune">EUNE</option>
+              <option value = "jp">JP</option>
+              <option value = "lan">LAN</option>
+              <option value = "LAS>LAS</option>
+              <option value = "oce">OCE</option>
               <option>RU</option>
             </select><button type="submit" class="btn btn-success"> ADD</button>
           </form>
@@ -116,7 +119,12 @@ echo('<div class="container">
         </div>
       </div>
       ' );
-    }?>
+    }
+    else{
+      echo("<p class = 'col-md-12' style = 'text-align:middle;'>Please Log In to use this page.</p>");
+    }
+session_write_close();
+    ?>
 
       <hr>
 
