@@ -124,8 +124,15 @@ try {
     $mid = ("M".$uid."ID");
     $mnm = ("M".$uid."NAME");
     $mpts = ("M".$uid."PTS");
-    $stmt = $conn->prepare("UPDATE 'td' SET ':mid'=':MID', ':mnm' = ':MNM', ':mpts'=':MPTS', WHERE 'TID' = :ID");
-    $stmt->bindParam(':mid', $mid, ':MID', $PlayersId, ':mnm',$mnm,'MNM',$playername,':mpts',$mpts,':MPTS',$AVGPP, ':ID', $uid);
+    $stmt = $conn->prepare("UPDATE td SET $mid='$PlayersId', $mnm = '$playername', $mpts='$AVGPP' WHERE TID = $uid");
+#    $stmt = $conn->prepare("UPDATE 'td' SET '" . :mid . "'='" . :MID . "', '" . :mnm . "' = '" . :MNM . "', '" . ":mpts . "'='" . ":MPTS . "', WHERE 'TID' = " . :ID);
+    $stmt->bindParam(':mid', $mid);
+    $stmt->bindParam(':MID', $PlayersId);
+    $stmt->bindParam(':mnm',$mnm);
+    $stmt->bindParam('MNM',$playername);
+    $stmt->bindParam(':mpts',$mpts);
+    $stmt->bindParam(':MPTS',$AVGPP);
+    $stmt->bindParam(':ID', $uid);
     #HERE NEED TO GIVE 1 VAR 1 BINDPARAM
     $stmt->execute();
     $affected_rows = $stmt->rowCount();
