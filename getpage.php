@@ -14,10 +14,9 @@ foreach ($idopt as $key => $value) {
   //echo array_push($playerid, $value->id);
   array_push($playerid, $value->id);
 }
-
 $playeridencod =json_encode($playerid);
 $PlayersId = substr($playeridencod, 1, (strlen($playeridencod)-2));
-#echo $playeridencod;
+
 $matchhisturl = "https://euw.api.pvp.net/api/lol/euw/v1.3/game/by-summoner/" . $PlayersId . "/recent?api_key=05047aed-e174-4bba-b294-c2c4ec3af4f0";
 $test = "c://stuff.txt";
 
