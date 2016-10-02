@@ -85,6 +85,9 @@ if ($_SESSION['LGIN'] == 1){
       </div><!--/.navbar-collapse -->
     </div>
   </nav>
+  </br>
+  </br>
+  </br>
   <table class="table table-hover">
   <thead> <tr> <th>#</th> <th>Players Name</th> <th>Avg Points</th></tr> </thead> <tbody> <tr> <th scope="row">Player 1</th> <td>'.$p1n.'</td> <td>'.$p1p.'</td></tr><th scope="row">Player 2</th> <td>'.$p2n.'</td> <td>'.$p2p.'</td></tr><th scope="row">Player 3</th> <td>'.$p3n.'</td> <td>'.$p3p.'</td></tr><th scope="row">Player 4</th> <td>'.$p4n.'</td> <td>'.$p4p.'</td></tr><th scope="row">Player 5 </th> <td>'.$p5n.'</td> <td>'.$p5p.'</td></tr></tbody>
   </table>
