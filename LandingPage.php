@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php include_once("header.php");
+
 ?>
 <html lang="en">
   <head>
@@ -12,10 +13,9 @@
     <!-- Bootstrap core CSS -->
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
 
+
     <!-- Custom styles for this template -->
     <link href="jumbotron.css" rel="stylesheet">
-
-
 
   </head>
 
@@ -34,21 +34,21 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <?php
-          if ($_SESSION['LGIN'] == 0){
-            echo('
+            if ($_SESSION['LGIN'] == 0){
+              echo('
 
-          <form class="navbar-form navbar-right" method="post" action="page2.php">
-            <!--So, do the bit above with that method and action in order to quote the login -->
-            <div class="form-group">
-              <input type="text" placeholder="Username" class="form-control" id="unameinp" name="username">
-              <!-- need to have name = username and the below name = password -->
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" name="password" class="form-control" id = "pwordinp">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>');
-        }?>
+              <form class="navbar-form navbar-right" method="post" action="page2.php">
+                <!--So, do the bit above with that method and action in order to quote the login -->
+                <div class="form-group">
+                  <input type="text" placeholder="Username" class="form-control" id="unameinp" name="username">
+                  <!-- need to have name = username and the below name = password -->
+                </div>
+                <div class="form-group">
+                  <input type="password" placeholder="Password" name="password" class="form-control" id = "pwordinp">
+                </div>
+                <button type="submit" class="btn btn-success">Sign in</button>
+              </form>');
+          }?>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>

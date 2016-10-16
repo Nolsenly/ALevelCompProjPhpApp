@@ -1,4 +1,5 @@
 <?php
+  include_once("connect.php");
 //header('Content-Type: application/json');
 $region =   htmlspecialchars($_POST["region"]);
 $playername = htmlspecialchars($_POST["ppname"]);
@@ -103,19 +104,11 @@ else {
 #add this data to database of player's team, being comprised of three players, stored as a name, favoured role and AVGPP
 #$AVGPP
 #echo $KillNo;
-$servername = "localhost";
-$username = "root";
-$password = "";
+
 
 #eWXDPAvqTAmf3JUj
 if ($noneplayed ==false){
-session_start();
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=alp_db", $username, $password);
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully";
-    // $dr = $conn->prepare("SELECT * FROM ud WHERE UNAME = :datUN;");
+session_start();    // $dr = $conn->prepare("SELECT * FROM ud WHERE UNAME = :datUN;");
     // $dr->bindValue(':datUN', $_SESSION['LIUN'], PDO::PARAM_STR);
     // $dr->execute();
 #    $uid =  $dr['UID'];
@@ -136,12 +129,8 @@ try {
     $stmt->execute();
     $affected_rows = $stmt->rowCount();
     #$conn->query("UPDATE `td` SET `TID`=[$MTeamId],`TNAME`=[value-2],`M" .$CorM. "ID`=[value-3],`M" .$CorM. NAME`=[value-4] WHERE 1"
-    }
-catch(PDOException $e)
-    {
-    echo "Connection failed: " . $e->getMessage();
-    }
 
 
+    header('Location: /ALevelCompProjPhpApp/DraftPage.php');
 }
 ?>

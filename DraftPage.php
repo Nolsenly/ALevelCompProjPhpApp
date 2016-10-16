@@ -1,8 +1,36 @@
 <!DOCTYPE html>
-<?php include_once("header.php");
-session_start();
-#var_dump($_SESSION);
+<?php
+  include_once("header.php");
+  #session_start();
+  #var_dump($_SESSION);
 
+  if ($_SESSION['LGIN'] == 1){
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $conn = new PDO("mysql:host=$servername;dbname=alp_db", $username, $password);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  #    echo "Connected successfully";
+     $dr = $conn->prepare("SELECT * FROM td");
+     #$dr->bindValue(':datUN', $_SESSION['LIUN'], PDO::PARAM_STR);
+     $dr->execute();
+     while($data = $dr->fetch(PDO::FETCH_ASSOC)){
+       $p1p = $data['M1PTS'];
+       $p1n = $data['M1NAME'];
+       $p2p = $data['M2PTS'];
+       $p2n = $data['M2NAME'];
+       $p3p = $data['M3PTS'];
+       $p3n = $data['M3NAME'];
+       $p4p = $data['M4PTS'];
+       $p4n = $data['M4NAME'];
+       $p5p = $data['M5PTS'];
+       $p5n = $data['M5NAME'];
+     }
+  } else {
+    header("location: LandingPage.php");
+    exit();
+  }
 ?>
 <html lang="en">
   <head>
@@ -12,12 +40,7 @@ session_start();
 
     <title>LFFL</title>
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
-
-
     <link href="jumbotron.css" rel="stylesheet">
-
-
-
   </head>
 
   <body>
@@ -33,17 +56,21 @@ session_start();
           <a class="navbar-brand" href="#">LFFL</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" method="post" action="page2.php">
-            <!--So, do the bit above with that method and action in order to quote the login -->
-            <div class="form-group">
-              <input type="text" placeholder="Username" class="form-control" id="unameinp" name="username">
-              <!-- need to have name = username and the below name = password -->
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" name="password" class="form-control" id = "pwordinp">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
+          <?php
+            if ($_SESSION['LGIN'] == 0){
+              echo('
+              <form class="navbar-form navbar-right" method="post" action="page2.php">
+                <!--So, do the bit above with that method and action in order to quote the login -->
+                <div class="form-group">
+                  <input type="text" placeholder="Username" class="form-control" id="unameinp" name="username">
+                  <!-- need to have name = username and the below name = password -->
+                </div>
+                <div class="form-group">
+                  <input type="password" placeholder="Password" name="password" class="form-control" id = "pwordinp">
+                </div>
+                <button type="submit" class="btn btn-success">Sign in</button>
+              </form>');
+          }?>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
@@ -65,7 +92,7 @@ echo('<div class="container">
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-4">
-          <h2>Picks:</h2>
+          <h2>Add new pick</h2>
           <p>Picks another Player</p>
           <form  method = "post" action ="getpage.php">
             <input type = "text" class ="form-control" id = "ppname" name = "ppname">
@@ -94,7 +121,7 @@ echo('<div class="container">
           <p><a class="btn btn-default" href="#" role="button">Trade For This player &raquo;</a></p>
        </div>
         <div class="col-md-4">
-          <h2>Chat(?Tentative) With other Players</h2>
+          <h2>Chat with other Players</h2>
           <p>Players You can trade with go here ?o_o? </p>
           <div class ="form-group">
           <!-- will work as above in the free agents place -->
@@ -110,6 +137,15 @@ session_write_close();
     ?>
 
       <hr>
+
+      <div class="row player-list">
+        <div class="col-md-4">
+          <h2>Your current picks</h2>
+          <table class="table table-hover">
+          <?php echo ('<thead> <tr> <th></th> <th>Players Name</th> <th>Avg Points</th></tr> </thead> <tbody> <tr> <th scope="row">Player 1</th> <td>'.$p1n.'</td> <td>'.$p1p.'</td></tr><th scope="row">Player 2</th> <td>'.$p2n.'</td> <td>'.$p2p.'</td></tr><th scope="row">Player 3</th> <td>'.$p3n.'</td> <td>'.$p3p.'</td></tr><th scope="row">Player 4</th> <td>'.$p4n.'</td> <td>'.$p4p.'</td></tr><th scope="row">Player 5 </th> <td>'.$p5n.'</td> <td>'.$p5p.'</td></tr></tbody>');?>
+          </table>
+        </div>
+      </div>
 
       <footer>
         <p>&copy; 2015 Company, Inc.</p>

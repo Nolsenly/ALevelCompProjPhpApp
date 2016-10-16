@@ -1,0 +1,12 @@
+.jumbotron {
+  margin-top: 3em;
+}
+
+.player-list {
+  clear:both !important;
+  padding-top: 1em;
+}
+
+#ppname, #region{
+  margin-bottom: 0.5em;
+}
