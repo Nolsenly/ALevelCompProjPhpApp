@@ -1,36 +1,8 @@
 <!DOCTYPE html>
 <?php
   include_once("header.php");
-  #session_start();
+  include_once("connect.php");
   #var_dump($_SESSION);
-
-  if ($_SESSION['LGIN'] == 1){
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $conn = new PDO("mysql:host=$servername;dbname=alp_db", $username, $password);
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  #    echo "Connected successfully";
-     $dr = $conn->prepare("SELECT * FROM td");
-     #$dr->bindValue(':datUN', $_SESSION['LIUN'], PDO::PARAM_STR);
-     $dr->execute();
-     while($data = $dr->fetch(PDO::FETCH_ASSOC)){
-       $p1p = $data['M1PTS'];
-       $p1n = $data['M1NAME'];
-       $p2p = $data['M2PTS'];
-       $p2n = $data['M2NAME'];
-       $p3p = $data['M3PTS'];
-       $p3n = $data['M3NAME'];
-       $p4p = $data['M4PTS'];
-       $p4n = $data['M4NAME'];
-       $p5p = $data['M5PTS'];
-       $p5n = $data['M5NAME'];
-     }
-  } else {
-    header("location: LandingPage.php");
-    exit();
-  }
 ?>
 <html lang="en">
   <head>
@@ -44,36 +16,6 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">LFFL</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <?php
-            if ($_SESSION['LGIN'] == 0){
-              echo('
-              <form class="navbar-form navbar-right" method="post" action="page2.php">
-                <!--So, do the bit above with that method and action in order to quote the login -->
-                <div class="form-group">
-                  <input type="text" placeholder="Username" class="form-control" id="unameinp" name="username">
-                  <!-- need to have name = username and the below name = password -->
-                </div>
-                <div class="form-group">
-                  <input type="password" placeholder="Password" name="password" class="form-control" id = "pwordinp">
-                </div>
-                <button type="submit" class="btn btn-success">Sign in</button>
-              </form>');
-          }?>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
 
     <div class="jumbotron">
       <div class="container">
@@ -129,11 +71,25 @@ echo('<div class="container">
         </div>
       </div>
       ' );
+    $averagePoints= array();
+    $playerName= array();
+    $variable = $_SESSION['LIID'];
+    $dr = $conn->prepare("SELECT * FROM playerData WHERE teamID = $variable");
+    $dr->execute();
+    while($data = $dr->fetch(PDO::FETCH_ASSOC)){
+      array_push($averagePoints, $data['playerPoints']);
+      array_push($playerName, $data['playerName']);
     }
-    else{
-      echo("<p class = 'col-md-12' style = 'text-align:middle;'>Please Log In to use this page.</p>");
+    echo("<div><div>Pick Name</div><div>Average Points</div></div>");
+    foreach ($user as $key => $value) {
+      echo("<div><div>$playerName[$key]</div>$averagePoints<div></div></div>");
     }
-session_write_close();
+    }
+         else {
+          $_SESSION['Err'] = "Not Logged In.";
+          header("location: LandingPage.php");
+        }
+    session_write_close();
     ?>
 
       <hr>
@@ -142,7 +98,7 @@ session_write_close();
         <div class="col-md-4">
           <h2>Your current picks</h2>
           <table class="table table-hover">
-          <?php echo ('<thead> <tr> <th></th> <th>Players Name</th> <th>Avg Points</th></tr> </thead> <tbody> <tr> <th scope="row">Player 1</th> <td>'.$p1n.'</td> <td>'.$p1p.'</td></tr><th scope="row">Player 2</th> <td>'.$p2n.'</td> <td>'.$p2p.'</td></tr><th scope="row">Player 3</th> <td>'.$p3n.'</td> <td>'.$p3p.'</td></tr><th scope="row">Player 4</th> <td>'.$p4n.'</td> <td>'.$p4p.'</td></tr><th scope="row">Player 5 </th> <td>'.$p5n.'</td> <td>'.$p5p.'</td></tr></tbody>');?>
+          <?php# echo ('<thead> <tr> <th></th> <th>Players Name</th> <th>Avg Points</th></tr> </thead> <tbody> <tr> <th scope="row">Player 1</th> <td>'.$p1n.'</td> <td>'.$p1p.'</td></tr><th scope="row">Player 2</th> <td>'.$p2n.'</td> <td>'.$p2p.'</td></tr><th scope="row">Player 3</th> <td>'.$p3n.'</td> <td>'.$p3p.'</td></tr><th scope="row">Player 4</th> <td>'.$p4n.'</td> <td>'.$p4p.'</td></tr><th scope="row">Player 5 </th> <td>'.$p5n.'</td> <td>'.$p5p.'</td></tr></tbody>');?>
           </table>
         </div>
       </div>
@@ -150,11 +106,12 @@ session_write_close();
       <footer>
         <p>&copy; 2015 Company, Inc.</p>
       </footer>
-    </div> <!-- /container -->
+    </div>
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
+    <!-- Bootst
+
+    <!-- Bootstrap core JavaScript ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
