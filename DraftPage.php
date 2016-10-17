@@ -74,11 +74,11 @@ echo('<div class="container">
     $averagePoints= array();
     $playerName= array();
     $variable = $_SESSION['LIID'];
-    $dr = $conn->prepare("SELECT * FROM playerData WHERE teamID = $variable");
+    $dr = $conn->prepare("SELECT * FROM pickData WHERE teamID = $variable");
     $dr->execute();
     while($data = $dr->fetch(PDO::FETCH_ASSOC)){
-      array_push($averagePoints, $data['playerPoints']);
-      array_push($playerName, $data['playerName']);
+      array_push($averagePoints, $data['pickPoints']);
+      array_push($playerName, $data['pickName']);
     }
     echo("<div><div>Pick Name</div><div>Average Points</div></div>");
     foreach ($user as $key => $value) {

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php include_once("header.php");
-
+include_once("Navbar.php");
 ?>
 <html lang="en">
   <head>
@@ -21,43 +21,14 @@
 
   <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">LFFL</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <?php
-            if ($_SESSION['LGIN'] == 0){
-              echo('
-
-              <form class="navbar-form navbar-right" method="post" action="page2.php">
-                <!--So, do the bit above with that method and action in order to quote the login -->
-                <div class="form-group">
-                  <input type="text" placeholder="Username" class="form-control" id="unameinp" name="username">
-                  <!-- need to have name = username and the below name = password -->
-                </div>
-                <div class="form-group">
-                  <input type="password" placeholder="Password" name="password" class="form-control" id = "pwordinp">
-                </div>
-                <button type="submit" class="btn btn-success">Sign in</button>
-              </form>');
-          }?>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
         <h1>LFFL</h1>
-        <p>Welcome To LFFL, LFFL an app to play a fantasy league of league of legends with your friends as the players! I hope you enjoy it and I wish you much luck in the jungle of soloq.</p>
+        <?php
+        $var = $_SESSION['LGIN'];
+        echo"<p>Welcome To LFFL, LFFL an app to play a fantasy league of league of legends with your friends as the players! I hope you enjoy it and I wish you much luck in the jungle of soloq. $var </p>"?>
         <p><a class="btn btn-primary btn-lg" href="http://localhost/ALevelCompProjPhpApp/DraftPage.php#" role="button">Learn more &raquo;</a></p>
       </div>
     </div>

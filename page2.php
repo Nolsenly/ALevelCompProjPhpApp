@@ -1,5 +1,6 @@
 <?php
 #at some point work out a way to redirect to last page. probs to do with trakcing last page in a session, assigning may ba a prob tho.
+include_once("connect.php");
 session_start();
 $u_name = htmlspecialchars($_POST['username']);
 $pword = md5(htmlspecialchars($_POST['password']));
@@ -7,21 +8,15 @@ $pword = md5(htmlspecialchars($_POST['password']));
 $user = array();
 $pass = array();
 $uID = array();
-$servername = "localhost";
-$username = "root";
-$password = "";
-
-    $conn = new PDO("mysql:host=$servername;dbname=alp_db", $username, $password);
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-#    echo "Connected successfully";
-     $dr = $conn->prepare("SELECT * FROM ud");
+     $dr = $conn->prepare("SELECT * FROM `userTable` WHERE `userName` = 'Administrator'");
      #$dr->bindValue(':datUN', $_SESSION['LIUN'], PDO::PARAM_STR);
      $dr->execute();
+     $error= $conn->errorInfo();
+echo $error[2];
      while($data = $dr->fetch(PDO::FETCH_ASSOC)){
-       array_push($uID, $data['UID']);
-       array_push($pass, $data['PWORD']);
-       array_push($user, $data['UNAME']);
+       array_push($uID, $data['userID']);
+       array_push($pass, $data['userPassword']);
+       array_push($user, $data['userName']);
 
      }
 #b44ce9d46c311d1aa1c4ecb46c97c994
