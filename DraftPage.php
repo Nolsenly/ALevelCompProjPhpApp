@@ -2,6 +2,7 @@
 <?php
   include_once("header.php");
   include_once("connect.php");
+  include_once("Navbar.php");
   #var_dump($_SESSION);
 ?>
 <html lang="en">
@@ -62,28 +63,23 @@ echo('<div class="container">
           <!--Basically the above bit is going to be a form where you can have name input and region select -->
           <p><a class="btn btn-default" href="#" role="button">Trade For This player &raquo;</a></p>
        </div>
-        <div class="col-md-4">
-          <h2>Chat with other Players</h2>
-          <p>Players You can trade with go here ?o_o? </p>
-          <div class ="form-group">
-          <!-- will work as above in the free agents place -->
-          <p><a class="btn btn-default" href="#" role="button">View Players Picks &raquo;</a></p>
-        </div>
-      </div>
       ' );
+
     $averagePoints= array();
     $playerName= array();
     $variable = $_SESSION['LIID'];
-    $dr = $conn->prepare("SELECT * FROM pickData WHERE teamID = $variable");
+    $dr = $conn->prepare("SELECT * FROM pickTable WHERE teamID = $variable");
     $dr->execute();
     while($data = $dr->fetch(PDO::FETCH_ASSOC)){
       array_push($averagePoints, $data['pickPoints']);
       array_push($playerName, $data['pickName']);
     }
+    echo("<div><div class = 'col-md-4'>");
     echo("<div><div>Pick Name</div><div>Average Points</div></div>");
-    foreach ($user as $key => $value) {
-      echo("<div><div>$playerName[$key]</div>$averagePoints<div></div></div>");
+    foreach ($playerName as $key => $value) {
+      echo("<div><div>$playerName</div>$averagePoints<div></div></div>");
     }
+    echo("</div></div>");
     }
          else {
           $_SESSION['Err'] = "Not Logged In.";
@@ -98,12 +94,12 @@ echo('<div class="container">
         <div class="col-md-4">
           <h2>Your current picks</h2>
           <table class="table table-hover">
-          <?php# echo ('<thead> <tr> <th></th> <th>Players Name</th> <th>Avg Points</th></tr> </thead> <tbody> <tr> <th scope="row">Player 1</th> <td>'.$p1n.'</td> <td>'.$p1p.'</td></tr><th scope="row">Player 2</th> <td>'.$p2n.'</td> <td>'.$p2p.'</td></tr><th scope="row">Player 3</th> <td>'.$p3n.'</td> <td>'.$p3p.'</td></tr><th scope="row">Player 4</th> <td>'.$p4n.'</td> <td>'.$p4p.'</td></tr><th scope="row">Player 5 </th> <td>'.$p5n.'</td> <td>'.$p5p.'</td></tr></tbody>');?>
+          <?php  #echo ('<thead> <tr> <th></th> <th>Players Name</th> <th>Avg Points</th></tr> </thead> <tbody> <tr> <th scope="row">Player 1</th> <td>'.$p1n.'</td> <td>'.$p1p.'</td></tr><th scope="row">Player 2</th> <td>'.$p2n.'</td> <td>'.$p2p.'</td></tr><th scope="row">Player 3</th> <td>'.$p3n.'</td> <td>'.$p3p.'</td></tr><th scope="row">Player 4</th> <td>'.$p4n.'</td> <td>'.$p4p.'</td></tr><th scope="row">Player 5 </th> <td>'.$p5n.'</td> <td>'.$p5p.'</td></tr></tbody>');?>
           </table>
         </div>
-      </div>
-
-      <footer>
+      </div><div id = "shoutboxbox">
+      <?php include_once("shoutbox.php"); ?>
+    </div><footer>
         <p>&copy; 2015 Company, Inc.</p>
       </footer>
     </div>

@@ -86,7 +86,7 @@ $epweeklen = 604800 ;
 #$epochisbad = "1463060053725";
 #$epoch = substr($epochisbad, 0, 10);
 #echo date('Y-m-d H:i:s', $epoch);
-#echo date(DATE_RFC2822  , strtotime($epochiscancer));
+#echo date(DATE_RFC2822  , strtotime($epochisannoying));
 #echo $ck;
 #echo $td;
 #echo $As;
@@ -116,7 +116,7 @@ session_start();    // $dr = $conn->prepare("SELECT * FROM ud WHERE UNAME = :dat
     $mid = ("M".$uid."ID");
     $mnm = ("M".$uid."NAME");
     $mpts = ("M".$uid."PTS");
-    $stmt = $conn->prepare("UPDATE td SET $mid='$PlayersId', $mnm = '$playername', $mpts='$AVGPP' WHERE TID = $uid");
+    $stmt = $conn->prepare("UPDATE  SET $mid='$PlayersId', $mnm = '$playername', $mpts='$AVGPP' WHERE TID = $uid");
 #    $stmt = $conn->prepare("UPDATE 'td' SET '" . :mid . "'='" . :MID . "', '" . :mnm . "' = '" . :MNM . "', '" . ":mpts . "'='" . ":MPTS . "', WHERE 'TID' = " . :ID);
     $stmt->bindParam(':mid', $mid);
     $stmt->bindParam(':MID', $PlayersId);

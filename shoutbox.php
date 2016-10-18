@@ -1,4 +1,4 @@
-<div>
+<div><div class = 'col-md-4'>
 <?php include_once("shoutoxrecieve.php");?>
 
 <?php echo("<p>$body[4] - $usern[4]</p>");?>
@@ -14,4 +14,5 @@
   </div>
   <button type="submit" class="btn btn-success">Sign in</button>
 </form>
+</div>
 </div>
