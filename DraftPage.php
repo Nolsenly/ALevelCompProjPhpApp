@@ -51,7 +51,13 @@ echo('<div class="container">
               <option value = "LAS>LAS</option>
               <option value = "oce">OCE</option>
               <option>RU</option>
-            </select><button type="submit" class="btn btn-success"> ADD</button>
+            </select>  <select class="form-control" id = "tpl" name = "tpl">
+                <option value = "1">Spot 1</option>
+                <option value = "2">Spot 2</option>
+                <option value = "3">Spot 3</option>
+                <option value = "4">Spot 4</option>
+                <option value = "5">Spot 5</option>
+              </select><button type="submit" class="btn btn-success"> ADD</button>
           </form>
           <!-- Will give player names and points.-->
 
@@ -77,7 +83,7 @@ echo('<div class="container">
     echo("<div><div class = 'col-md-4'>");
     echo("<div><div>Pick Name</div><div>Average Points</div></div>");
     foreach ($playerName as $key => $value) {
-      echo("<div><div>$playerName</div>$averagePoints<div></div></div>");
+      echo("<div><div>".$playerName[$key]."</div><div>".$averagePoints[$key]."</div></div>");
     }
     echo("</div></div>");
     }
