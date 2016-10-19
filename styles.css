@@ -1,12 +1,17 @@
 .jumbotron {
   margin-top: 3em;
-}
+}/*making sure it's up in the right place.*/
 
 .player-list {
   clear:both !important;
   padding-top: 1em;
-}
+}/*making sure things are well aligned*/
 
 #ppname, #region{
   margin-bottom: 0.5em;
+}/*setting distances betwixt boxes*/
+.shoutbox {
+  height:2em;
+  clear:both;
 }
+/*setting shoutbox sizes*/

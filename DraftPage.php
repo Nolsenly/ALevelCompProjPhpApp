@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
   include_once("header.php");
-  include_once("connect.php");
+  include_once("connect.php");# the includes, for connecting to php, adding the bootstrap and the navbar.
   include_once("Navbar.php");
   #var_dump($_SESSION);
 ?>
@@ -14,7 +14,7 @@
     <title>LFFL</title>
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="jumbotron.css" rel="stylesheet">
-  </head>
+  </head> <!--adding some stylesheets and stuff-->
 
   <body>
 
@@ -24,19 +24,19 @@
         <p>LFFL Draft Page.</p>
         <p><a class="btn btn-primary btn-lg" href="http://localhost/myApp/HelpPage.php#" role="button">Need Help? &raquo;</a></p>
         <!--Here we need to get some Help and explanation of how to use the site on another webpage6-->
-      </div>
+      </div><!-- the help page link. -->
     </div>
     <?php
 #    session_start();
     #var_dump($_SESSION);
-    if ($_SESSION['LGIN']==1){
+    if ($_SESSION['LGIN']==1){ #basically, if the person is logged in, it'll display the rest of the page content.
 
 echo('<div class="container">
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-4">
           <h2>Add new pick</h2>
-          <p>Picks another Player</p>
+          <p>Picks another Player</p>                   <!--basically the form for adding a new player to your picks.-->
           <form  method = "post" action ="getpage.php">
             <input type = "text" class ="form-control" id = "ppname" name = "ppname">
             <select class="form-control" id = "region" name = "region">
@@ -66,44 +66,35 @@ echo('<div class="container">
           <h2>Add Player</h2>
           <p>Player Name input here and region select</p>
 
-          <!--Basically the above bit is going to be a form where you can have name input and region select -->
-          <p><a class="btn btn-default" href="#" role="button">Trade For This player &raquo;</a></p>
-       </div>
+        </div>
       ' );
 
-    $averagePoints= array();
+    $averagePoints= array(); # this here is the part where you get to look at the points your picks have earned.
     $playerName= array();
-    $variable = $_SESSION['LIID'];
-    $dr = $conn->prepare("SELECT * FROM pickTable WHERE teamID = $variable");
+    $dr = $conn->prepare("SELECT * FROM pickTable WHERE teamID = $variable"); #get said player's picks and the associated data.
+    $variable = $_SESSION['LIID']; # get the user who is logged in's ID
     $dr->execute();
     while($data = $dr->fetch(PDO::FETCH_ASSOC)){
       array_push($averagePoints, $data['pickPoints']);
       array_push($playerName, $data['pickName']);
+    }# mmaking the table with the pickdata in.
+    echo("<div class = 'chatbox'><div class = 'col-md-4'><h2>Your Roster.</h2>");
+    echo("<table class = 'table'><thead><tr><th>Pick Name</th><th>Average Points</th></tr></thead><tbody>");
+    foreach ($playerName as $key => $value) { #iterative table making
+      echo("<tbody><tr><th>$playerName[$key]</th><th>$averagePoints[$key]</th></tr>");
+    }#<th scope="row">Player 2</th> <td>'.$p2n.'</td> <td>'.$p2p.'</td></tr>
+    echo("</tbody></table>");
     }
-    echo("<div><div class = 'col-md-4'>");
-    echo("<div><div>Pick Name</div><div>Average Points</div></div>");
-    foreach ($playerName as $key => $value) {
-      echo("<div><div>".$playerName[$key]."</div><div>".$averagePoints[$key]."</div></div>");
-    }
-    echo("</div></div>");
-    }
-         else {
-          $_SESSION['Err'] = "Not Logged In.";
-          header("location: LandingPage.php");
+         else { # if you're not logged in.
+          $_SESSION['Err'] = "Not Logged In."; # return error if there is one.
+          header("location: LandingPage.php");#return to the landingpage
         }
     session_write_close();
     ?>
 
       <hr>
 
-      <div class="row player-list">
-        <div class="col-md-4">
-          <h2>Your current picks</h2>
-          <table class="table table-hover">
-          <?php  #echo ('<thead> <tr> <th></th> <th>Players Name</th> <th>Avg Points</th></tr> </thead> <tbody> <tr> <th scope="row">Player 1</th> <td>'.$p1n.'</td> <td>'.$p1p.'</td></tr><th scope="row">Player 2</th> <td>'.$p2n.'</td> <td>'.$p2p.'</td></tr><th scope="row">Player 3</th> <td>'.$p3n.'</td> <td>'.$p3p.'</td></tr><th scope="row">Player 4</th> <td>'.$p4n.'</td> <td>'.$p4p.'</td></tr><th scope="row">Player 5 </th> <td>'.$p5n.'</td> <td>'.$p5p.'</td></tr></tbody>');?>
-          </table>
-        </div>
-      </div><div id = "shoutboxbox">
+    <div id = "shoutboxbox">
       <?php include_once("shoutbox.php"); ?>
     </div><footer>
         <p>&copy; 2015 Company, Inc.</p>

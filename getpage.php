@@ -1,27 +1,27 @@
 <?php
-  include_once("connect.php");
+  include_once("connect.php");#connecting to the DB
 //header('Content-Type: application/json');
 $region =   htmlspecialchars($_POST["region"]);
 $playername = htmlspecialchars($_POST["ppname"]);
 $idurl = "https://euw.api.pvp.net/api/lol/" . $region . "/v1.4/summoner/by-name/" . $playername . "?api_key=05047aed-e174-4bba-b294-c2c4ec3af4f0";
-$idopt = file_get_contents($idurl);
+$idopt = file_get_contents($idurl); # fetching data from the websitez
 //var_dump($idopt);
 
 $idopt = json_decode($idopt);
 //echo( json_decode($idopt));
 $playerid = [];
 echo("1");
-foreach ($idopt as $key => $value) {
+foreach ($idopt as $key => $value) { #push values from the fetch to array
   //echo array_push($playerid, $value->id);
   array_push($playerid, $value->id);
 }
 $playeridencod =json_encode($playerid);
-$PlayersId = substr($playeridencod, 1, (strlen($playeridencod)-2));
+$PlayersId = substr($playeridencod, 1, (strlen($playeridencod)-2));#cut off unecessary parts of string
 
 $matchhisturl = "https://euw.api.pvp.net/api/lol/euw/v1.3/game/by-summoner/" . $PlayersId . "/recent?api_key=05047aed-e174-4bba-b294-c2c4ec3af4f0";
 $test = "c://stuff.txt";
 
-$histopt = file_get_contents($matchhisturl);
+$histopt = file_get_contents($matchhisturl); # fetch second part of the data
 echo("2");
 //echo $matchhisturl;
 $histthing = [];
@@ -36,14 +36,14 @@ $Dt = 0;
 $Dc = 0;
 $noofgms = 0;
 $noneplayed=false;
-foreach ($histdec['games'] as $key => $value) {
+foreach ($histdec['games'] as $key => $value) { # totalling the values of the pick's data. within the last ten games and the last week.
 $epcd = $value['createDate'];
   $epoch = substr($epcd, 0, 10);
-  $epdate = date('Y-m-d H:i:s', $epoch);
+  $epdate = date('Y-m-d H:i:s', $epoch); #convert given epoch into standard time.
   $currtimeep = time();
 #  echo $epoch . "  " . $currtimeep;
 $epweeklen = 604800 ;
-    $minweektimeep = $currtimeep -  $epweeklen ;
+    $minweektimeep = $currtimeep -  $epweeklen ; # finding time for last week
     #echo $minweektimeep . " " . $epoch . " ";
 
     if ( $epoch > ($minweektimeep)){
@@ -83,7 +83,7 @@ $epweeklen = 604800 ;
     }
     $noofgms = $noofgms +1;
 }
-}
+}# values all assigned and number of games played
 echo("3");
 #$epochisbad = "1463060053725";
 #$epoch = substr($epochisbad, 0, 10);
@@ -96,7 +96,7 @@ echo("3");
 if ($noneplayed == false){
   echo("4");
 }
-if ($noofgms > 0){
+if ($noofgms > 0){ # get the average points, with the assigned points per value.
 $PlayerPts = ($ck - $td + 0.5*$As + 0.1*($Ws) + 0.005*$Tcc + 0.001*$Dc + 0.0001*($Dt-$Dc))/10;
 $AVGPP = $PlayerPts / $noofgms;
 }
@@ -117,7 +117,7 @@ session_start();    // $dr = $conn->prepare("SELECT * FROM ud WHERE UNAME = :dat
     // $dr->bindValue(':datUN', $_SESSION['LIUN'], PDO::PARAM_STR);
     // $dr->execute();
 #    $uid =  $dr['UID'];
-    $tpl = $_POST['tpl'];
+    $tpl = $_POST['tpl']; # from here we're adding the pick's data to the table.
     $tplac = ("teamPlace");
     $mid = ("pickID");
     $mnm = ("pickName");
