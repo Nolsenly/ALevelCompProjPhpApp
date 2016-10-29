@@ -5,32 +5,32 @@ session_start();
 $u_name = htmlspecialchars($_POST['username']); #get values that are inputted from the last page.
 $pword = md5(htmlspecialchars($_POST['password'])); # hash the password so it's secure.
 print_r($u_name);
-$user = array();
-$pass = array();
-$uID = array();
+$userdb = array();
+$passdb = array();
+$uIDdb = array();
      $dr = $conn->prepare("SELECT * FROM `userTable` WHERE `userName` = '".$u_name."'"); # get data from table.
      #$dr->bindValue(':datUN', $_SESSION['LIUN'], PDO::PARAM_STR);
      $dr->execute();
      $error= $conn->errorInfo();
 echo $error[2];
      while($data = $dr->fetch(PDO::FETCH_ASSOC)){ #assign collceted data to it's associated array.
-       array_push($uID, $data['userID']);
-       array_push($pass, $data['userPassword']);
-       array_push($user, $data['userName']);
+       array_push($uIDdb, $data['userID']);
+       array_push($passdb, $data['userPassword']);
+       array_push($userdb, $data['userName']);
 
      }
 # pwrd = ""
-$passwords = array_map('md5', $pass);
-foreach ($user as $key => $value) { # print the values for the check.
+$passwordshash = array_map('md5', $passdb);
+foreach ($userdb as $key => $value) { # print the values for the check.
   print_r($u_name);
   print_r($value);
-  print_r($passwords[$key]);
+  print_r($passwordshash[$key]);
   print_r($pword);
   if($value == $u_name){
     echo("1");
-    if($passwords[$key] == $pword){ #assign session variables that can be used elsewhere
-      $_SESSION['LIID'] = $uID[$key];
-      $_SESSION['LIUN'] = $user[$key];
+    if($passwordshash[$key] == $pword){ #assign session variables that can be used elsewhere
+      $_SESSION['LIID'] = $uIDdb[$key];
+      $_SESSION['LIUN'] = $userdb[$key];
       $_SESSION['LGIN'] = 1;
       echo('2');
       #$_SESSION['LITN'] = $TNO[$key];

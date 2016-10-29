@@ -1,24 +1,30 @@
 <?php
   include_once("connect.php");#connecting to the DB
 //header('Content-Type: application/json');
+session_start();
 $region =   htmlspecialchars($_POST["region"]);
 $playername = htmlspecialchars($_POST["ppname"]);
-$idurl = "https://euw.api.pvp.net/api/lol/" . $region . "/v1.4/summoner/by-name/" . $playername . "?api_key=05047aed-e174-4bba-b294-c2c4ec3af4f0";
+$strplayername = str_replace(" ", "%20", $playername);
+$idurl = "https://".$region.".api.pvp.net/api/lol/" . $region . "/v1.4/summoner/by-name/" . $strplayername . "?api_key=05047aed-e174-4bba-b294-c2c4ec3af4f0";
 $idopt = file_get_contents($idurl); # fetching data from the websitez
 //var_dump($idopt);
-
+#echo($idopt)
+#print_r($idopt);
+if ($idopt != ""){
 $idopt = json_decode($idopt);
 //echo( json_decode($idopt));
 $playerid = [];
+
 echo("1");
 foreach ($idopt as $key => $value) { #push values from the fetch to array
   //echo array_push($playerid, $value->id);
   array_push($playerid, $value->id);
 }
+
 $playeridencod =json_encode($playerid);
 $PlayersId = substr($playeridencod, 1, (strlen($playeridencod)-2));#cut off unecessary parts of string
 
-$matchhisturl = "https://euw.api.pvp.net/api/lol/euw/v1.3/game/by-summoner/" . $PlayersId . "/recent?api_key=05047aed-e174-4bba-b294-c2c4ec3af4f0";
+$matchhisturl = "https://".$region.".api.pvp.net/api/lol/".$region  ."/v1.3/game/by-summoner/" . $PlayersId . "/recent?api_key=05047aed-e174-4bba-b294-c2c4ec3af4f0";
 $test = "c://stuff.txt";
 
 $histopt = file_get_contents($matchhisturl); # fetch second part of the data
@@ -113,7 +119,7 @@ echo("5");
 $endres = false;
 #eWXDPAvqTAmf3JUj
 if ($noneplayed == false){
-session_start();    // $dr = $conn->prepare("SELECT * FROM ud WHERE UNAME = :datUN;");
+    // $dr = $conn->prepare("SELECT * FROM ud WHERE UNAME = :datUN;");
     // $dr->bindValue(':datUN', $_SESSION['LIUN'], PDO::PARAM_STR);
     // $dr->execute();
 #    $uid =  $dr['UID'];
@@ -122,23 +128,19 @@ session_start();    // $dr = $conn->prepare("SELECT * FROM ud WHERE UNAME = :dat
     $mid = ("pickID");
     $mnm = ("pickName");
     $mpts = ("pickPoints");
-    $meme = $conn->prepare("SELECT $mid FROM pickTable WHERE $tplac = '$tpl';");
-    $meme->execute();
-    while($data = $meme->fetch(PDO::FETCH_ASSOC)){
+        $teamID = $_SESSION['LIID'];
+    $SQLCONN = $conn->prepare("SELECT $mid FROM pickTable WHERE $tplac = '$tpl' AND teamID = $teamID;");
+    $SQLCONN->execute();
+    while($data = $SQLCONN->fetch(PDO::FETCH_ASSOC)){
       if (isset($data[$mid])){
         echo ("yeboi");
           $endres = true;
       }
     }
     $teamID = $_SESSION['LIID'];
-    if ($endres == true){
-      echo("6");
-    $stmt = $conn->prepare("UPDATE pickTable SET $mid='$PlayersId', $mnm='$playername', $mpts='$AVGPP' WHERE $tplac = '$tpl'");
-    }
-    else{
-      echo("naboi"); # ID ID PTS NAME PLACE
-      $stmt = $conn->prepare("INSERT INTO pickTable VALUES ('$PlayersId','$teamID','$AVGPP','$playername','$tpl');");
-    }
+      $stmt = $conn->prepare("INSERT INTO pickTable VALUES ('','$PlayersId','$teamID','$AVGPP','$playername','$tpl');");
+      $drop = $conn->prepare("DELETE FROM `picktable` WHERE `teamPlace` = '$tpl' AND `teamID` = '$teamID'");
+      $drop->execute();
 #    $stmt = $conn->prepare("UPDATE 'td' SET '" . :mid . "'='" . :MID . "', '" . :mnm . "' = '" . :MNM . "', '" . ":mpts . "'='" . ":MPTS . "', WHERE 'TID' = " . :ID);
     // $stmt->bindParam(':mid', $mid);
     // $stmt->bindParam(':MID', $PlayersId);
@@ -150,9 +152,18 @@ session_start();    // $dr = $conn->prepare("SELECT * FROM ud WHERE UNAME = :dat
     #HERE NEED TO GIVE 1 VAR 1 BINDPARAM
     $stmt->execute();
     $affected_rows = $stmt->rowCount();
+    unset($_SESSION["Err"]);
+    $_SESSION["Err"] = "test";
+  }}
+  else{
+    $_SESSION["Err"] = "Invalid Username.";
+  }
     #$conn->query("UPDATE `td` SET `TID`=[$MTeamId],`TNAME`=[value-2],`M" .$CorM. "ID`=[value-3],`M" .$CorM. NAME`=[value-4] WHERE 1"
+  #  unset($_SESSION["Err"]);
+    #$_SESSION["Err"] = "test";
+  #$_SESSION["Err"] = "Invalid Username.";
+#}
+  session_write_close();
+      header('Location: /ALevelCompProjPhpApp/DraftPage.php');
 
-
-    header('Location: /ALevelCompProjPhpApp/DraftPage.php');
-}
 ?>

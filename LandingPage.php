@@ -28,7 +28,7 @@ include_once("Navbar.php"); #include navbar and header so that stuff works
         <h1>LFFL</h1>
         <?php
         $var = $_SESSION['LGIN']; # if you're logged in
-        echo"<p>Welcome To LFFL, LFFL an app to play a fantasy league of league of legends with your friends as the players! I hope you enjoy it and I wish you much luck in the jungle of soloq. $var </p>"?>
+        echo"<p>Welcome To LFFL, LFFL an app to play a fantasy league of league of legends with your friends as the players! I hope you enjoy it and I wish you much luck in the jungle of soloq.</p>"?>
         <p><a class="btn btn-primary btn-lg" href="http://localhost/ALevelCompProjPhpApp/DraftPage.php#" role="button">Learn more &raquo;</a></p>
       </div>
     </div>

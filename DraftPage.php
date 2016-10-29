@@ -30,13 +30,17 @@
 #    session_start();
     #var_dump($_SESSION);
     if ($_SESSION['LGIN']==1){ #basically, if the person is logged in, it'll display the rest of the page content.
-
+      try {
+        $Error = $_SESSION["Err"];
+      } catch (Exception $e){
+        $Error= "";
+      }
 echo('<div class="container">
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-4">
           <h2>Add new pick</h2>
-          <p>Picks another Player</p>                   <!--basically the form for adding a new player to your picks.-->
+          <p>'.$Error.'</p>                   <!--basically the form for adding a new player to your picks.-->
           <form  method = "post" action ="getpage.php">
             <input type = "text" class ="form-control" id = "ppname" name = "ppname">
             <select class="form-control" id = "region" name = "region">
@@ -63,16 +67,15 @@ echo('<div class="container">
 
         </div>
         <div class="col-md-4">
-          <h2>Add Player</h2>
-          <p>Player Name input here and region select</p>
-
-        </div>
-      ' );
+          <h2>Chat</h2>');
+           include_once("shoutbox.php");
+        echo "</div>";
 
     $averagePoints= array(); # this here is the part where you get to look at the points your picks have earned.
     $playerName= array();
-    $dr = $conn->prepare("SELECT * FROM pickTable WHERE teamID = $variable"); #get said player's picks and the associated data.
     $variable = $_SESSION['LIID']; # get the user who is logged in's ID
+    $dr = $conn->prepare("SELECT * FROM pickTable WHERE teamID = $variable"); #get said player's picks and the associated data.
+
     $dr->execute();
     while($data = $dr->fetch(PDO::FETCH_ASSOC)){
       array_push($averagePoints, $data['pickPoints']);
@@ -83,7 +86,7 @@ echo('<div class="container">
     foreach ($playerName as $key => $value) { #iterative table making
       echo("<tbody><tr><th>$playerName[$key]</th><th>$averagePoints[$key]</th></tr>");
     }#<th scope="row">Player 2</th> <td>'.$p2n.'</td> <td>'.$p2p.'</td></tr>
-    echo("</tbody></table>");
+    echo("</tbody></table></div></div>");
     }
          else { # if you're not logged in.
           $_SESSION['Err'] = "Not Logged In."; # return error if there is one.
@@ -95,10 +98,13 @@ echo('<div class="container">
       <hr>
 
     <div id = "shoutboxbox">
-      <?php include_once("shoutbox.php"); ?>
-    </div><footer>
-        <p>&copy; 2015 Company, Inc.</p>
-      </footer>
+      <?php# include_once("shoutbox.php"); ?>
+    </div>
+
+    </div>
+
+    <div id="footer">
+      <p>&copy; 2015 Company, Inc.</p>
     </div>
 
 

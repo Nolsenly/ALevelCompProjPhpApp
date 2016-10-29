@@ -13,7 +13,7 @@ while($data = $dc->fetch(PDO::FETCH_ASSOC)){ #assign collceted data to it's asso
   }
   foreach ($pP as $key => $value) {
     $tpP = $tpP + $pP[$key];
-    # code...
+    # update the total points.
   }
   $apP = ($tpP/$x);
 $dd = $conn->prepare("UPDATE teamTable SET teamPoints='$apP' WHERE teamID = '".$uid."'");
