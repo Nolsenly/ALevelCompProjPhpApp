@@ -1,21 +1,50 @@
 <?php
 include_once("connect.php");
 $uid = 1; # make this equal to the session variable.
-$dc = $conn->prepare("SELECT * FROM pickTable WHERE teamID = '".$uid."'");
+$dc = $conn->prepare("SELECT userID FROM usertable");
 $dc->execute();
 $x = 0;
-$pP = array();
+$pointsArray = array();
 $tpP = 0;
 $apP = 0;
+$points = 0;
+
 while($data = $dc->fetch(PDO::FETCH_ASSOC)){ #assign collceted data to it's associated array.
-  array_push($pP, $data['pickPoints']);
-  $x = $x+1;
+  $user = $data['userID'];
+  $dc2 = $conn->prepare("SELECT * FROM picktable WHERE teamID = $user");
+  $dc2->execute();
+  var_dump($user);
+  $x = 0;
+  $points = 0;
+  $totalPoints = 0;
+
+  while($data2 = $dc2->fetch(PDO::FETCH_ASSOC)){ #assign collceted data to it's associated array.
+    $pcktable = $data2['pickPoints'];
+      if ($pcktable != "") {
+      var_dump($pcktable);
+      $points = $points + $pcktable;
+      $x = $x+1;
+    }
   }
-  foreach ($pP as $key => $value) {
-    $tpP = $tpP + $pP[$key];
-    # update the total points.
+  if ($x != 0) {
+    $totalPoints = $points / $x;
+    echo $totalPoints;
   }
-  $apP = ($tpP/$x);
-$dd = $conn->prepare("UPDATE teamTable SET teamPoints='$apP' WHERE teamID = '".$uid."'");
-$dd->execute();
+
+  $dd = $conn->prepare("UPDATE teamTable SET teamPoints='$totalPoints' WHERE teamID = '".$user."'");
+  $dd->execute();
+}
+
+  #$currentPckPts = $data['pickPoints'];
+  #foreach ($pckPts as $key => $value) {
+  #array_push($pP, $data['pickPoints']);
+  #$x = $x+1;
+#}}
+#  foreach ($pP as $key => $value) {
+#    $tpP = $tpP + $pP[$key];
+#    # update the total points.
+#  }
+#  $apP = ($tpP/$x);
+
+
 ?>

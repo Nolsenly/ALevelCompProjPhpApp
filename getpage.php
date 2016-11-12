@@ -139,7 +139,7 @@ if ($noneplayed == false){
     }
     $teamID = $_SESSION['LIID'];
       $stmt = $conn->prepare("INSERT INTO pickTable VALUES ('','$PlayersId','$teamID','$AVGPP','$playername','$tpl');");
-      $drop = $conn->prepare("DELETE FROM `picktable` WHERE `teamPlace` = '$tpl' AND `teamID` = '$teamID'");
+      $drop = $conn->prepare("DELETE FROM `picktable` WHERE `teamPlace` = '$tpl' AND `teamID` = '$teamID");
       $drop->execute();
 #    $stmt = $conn->prepare("UPDATE 'td' SET '" . :mid . "'='" . :MID . "', '" . :mnm . "' = '" . :MNM . "', '" . ":mpts . "'='" . ":MPTS . "', WHERE 'TID' = " . :ID);
     // $stmt->bindParam(':mid', $mid);

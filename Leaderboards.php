@@ -29,4 +29,27 @@ foreach ($teamName as $key => $value) { #iterative table making
 }#<th scope="row">Player 2</th> <td>'.$p2n.'</td> <td>'.$p2p.'</td></tr>
 echo("</tbody></table>");
 
+$flid = $conn->prepare("SELECT idee FROM followertable WHERE ider = '$variable'");
+$flid->execute();
+$fuserID = array();
+$score = array();
+while($data = $flid->fetch(PDO::FETCH_ASSOC)){
+  array_push($fuserID, $data['idee']);
+}
+echo("<table class = 'table'><thead><tr><th>Team Name</th><th>Average Points</th><th>Owner Name</th></tr></thead>");
+foreach ($fuserID as $key => $value) {
+  $var = $fuserID[$key];
+  $scfl = $conn->prepare("SELECT teamName, teamPoints FROM teamtable WHERE userID = '$var'");
+  $scfl->execute();
+  $unaf = $conn->prepare("SELECT userName FROM usertable WHERE userID = $var");
+  $unaf->execute();
+  while($data = $scfl->fetch(PDO::FETCH_ASSOC)){
+    while($data2 = $unaf->fetch(PDO::FETCH_ASSOC)){
+      array_push($score, $data['teamName'], $data['teamPoints'], $data2['userName']);
+    }
+  }
+  echo("<tbody><tr><th>".$score[0]."</th><th>".$score[1]."</th><th>".$score[2] ."</th></tr>");
+  $score = array();
+}
+echo("</tbody></table>");
 ?>

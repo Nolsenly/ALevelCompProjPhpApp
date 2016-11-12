@@ -51,3 +51,22 @@ h1, .navbar-brand {
   .btn-no-margin {
     margin-top: 0 !important;
   }
+.hrz-bar {
+  float: left;
+  }
+  .hrz-bar li{
+    float:left !important;
+    margin-right: 2em;
+    margin-left:2em;
+    color: #FFF !important;
+    text-align: center;
+    margin-top: 1em;
+    list-style: none;
+    }
+    .hrz-bar li a {
+      color: #FFF;
+
+    }
+    a:hover {
+      cursor: pointer;
+    }

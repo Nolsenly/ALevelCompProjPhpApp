@@ -2,8 +2,8 @@
 #at some point work out a way to redirect to last page. probs to do with trakcing last page in a session, assigning may ba a prob tho.
 include_once("connect.php"); #connect to db
 session_start();
-$u_name = htmlspecialchars($_POST['username']); #get values that are inputted from the last page.
-$pword = md5(htmlspecialchars($_POST['password'])); # hash the password so it's secure.
+$u_name = stripslashes(htmlspecialchars($_POST['username'])); #get values that are inputted from the last page.
+$pword = md5(stripslashes(htmlspecialchars($_POST['password']))); # hash the password so it's secure.
 print_r($u_name);
 $userdb = array();
 $passdb = array();
@@ -41,6 +41,6 @@ foreach ($userdb as $key => $value) { # print the values for the check.
     $_SESSION['LGIN'] = 0;
   }}
   session_write_close(); #end session
-  header("location: LandingPage.php"); # redirect user
+  #header("location: LandingPage.php"); # redirect user
   exit();
 ?>

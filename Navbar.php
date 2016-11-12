@@ -20,6 +20,12 @@
       <a class="navbar-brand" href="#"><span>L</span>eague <span>F</span>antasy <span>F</span>riends <span>L</span>eague</a> <!-- title -->
     </div>
     <div id="navbar" class="navbar-collapse collapse">
+      <ul class = "hrz-bar">
+        <li><a>Home</a></li>
+        <li><a>Draft</a></li>
+        <li><a>Register</a></li>
+        <li><a>Leaderboard</a></li>
+      </ul>
       <?php
         #if ($_SESSION['LGIN'] == 0 or null == $_SESSION['LGIN']){ # checking about whether logged in or not.
         if ($_SESSION['LGIN'] != 1){
